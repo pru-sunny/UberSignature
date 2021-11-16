@@ -131,11 +131,22 @@ public class SignatureDrawingViewController: UIViewController {
     override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         updateModel(withTouches: touches, shouldEndContinousLine: true)
+        
+        navigationController?.presentationController?.presentedView?.gestureRecognizers?.forEach {
+            $0.isEnabled = false
+        }
     }
     
     override public func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesMoved(touches, with: event)
         updateModel(withTouches: touches, shouldEndContinousLine: false)
+    }
+    
+    override public func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        navigationController?.presentationController?.presentedView?.gestureRecognizers?.forEach {
+            $0.isEnabled = true
+        }
     }
     
     // MARK: Private
